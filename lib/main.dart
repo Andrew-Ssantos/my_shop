@@ -1,4 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/models/auth/auth.dart';
+import 'package:my_shop/models/cart/cart.dart';
+import 'package:my_shop/models/order/order_list.dart';
+import 'package:my_shop/models/product/product_list.dart';
+import 'package:my_shop/pages/auth/auth_or_home_page.dart';
+import 'package:my_shop/pages/cart_page.dart';
+import 'package:my_shop/pages/orders_page.dart';
+import 'package:my_shop/pages/products/product_detail_page.dart';
+import 'package:my_shop/pages/products/product_form_page.dart';
+import 'package:my_shop/pages/products/products_page.dart';
+import 'package:my_shop/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,61 +22,44 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ProductList(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => Cart(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => OrderList(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Auth(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: Colors.deepPurple).copyWith(
+            primary: Colors.deepPurple,
+            secondary: Colors.lightBlue,
+          ),
+          fontFamily: 'Lato',
+          useMaterial3: true,
+          iconTheme: const IconThemeData(color: Colors.white),
+        ),
+        // home: ProductsOverviewPage(),
+        routes: {
+          AppRoutes.AUTH_OR_HOME: (ctx) => const AuthOrHomePage(),
+          AppRoutes.PRODUCTS: (ctx) => const ProductPage(),
+          AppRoutes.PRODUCT_DETAIL: (ctx) => const ProductDetailPage(),
+          AppRoutes.PRODUCT_FORM: (ctx) => const ProductFormPage(),
+          AppRoutes.CART: (ctx) => const CartPage(),
+          AppRoutes.ORDERS: (ctx) => const OrdersPage(),
+        },
+        debugShowCheckedModeBanner: false,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
