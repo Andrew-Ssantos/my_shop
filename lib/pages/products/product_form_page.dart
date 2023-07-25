@@ -126,7 +126,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
         ],
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.all(20),
               child: Form(

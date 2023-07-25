@@ -87,7 +87,7 @@ class _CartTextButtonState extends State<CartTextButton> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? CircularProgressIndicator()
+        ? const CircularProgressIndicator()
         : TextButton(
             onPressed: widget.cart.itemsCount == 0
                 ? null

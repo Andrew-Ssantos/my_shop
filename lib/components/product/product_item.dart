@@ -49,11 +49,11 @@ class ProductItem extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(ctx).pop(true);
                         },
-                        child: Text('Sim'),
+                        child: const Text('Sim'),
                       ),
                       TextButton(
                         onPressed: () => Navigator.of(ctx).pop(false),
-                        child: Text('Não'),
+                        child: const Text('Não'),
                       ),
                     ],
                   ),
@@ -67,7 +67,7 @@ class ProductItem extends StatelessWidget {
                     } on HttpException catch (error) {
                       msg.showSnackBar(
                         SnackBar(
-                          duration: Duration(milliseconds: 2000),
+                          duration: const Duration(milliseconds: 2000),
                           content: Text(error.toString()),
                         ),
                       );
